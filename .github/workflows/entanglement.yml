@@ -1,0 +1,33 @@
+name: Auto Entanglement
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+jobs:
+  entangle:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Run Entanglement
+        run: python3 entanglement.py
+      
+      - name: Commit and Push Results
+        run: |
+          git config user.name "Entanglement Bot"
+          git config user.email "entanglement-bot@users.noreply.github.com"
+          git add combinazioni_generate.json storia_entanglement.jsonl interessi.json
+          git diff --quiet && git diff --staged --quiet || git commit -m "🔄 Auto-entanglement $(date -u +%Y-%m-%d)"
+          git push
+
+permissions:
+  contents: write
