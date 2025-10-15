@@ -1,0 +1,23 @@
+{
+  "timestamp": "2025-10-15T20:40:21.946152",
+  "totale_combinazioni": 4,
+  "combinazioni": [
+    [
+      "giardinaggio",
+      "elettronica"
+    ],
+    [
+      "giardinaggio",
+      "fotografia"
+    ],
+    [
+      "elettronica",
+      "fotografia"
+    ],
+    [
+      "giardinaggio",
+      "elettronica",
+      "fotografia"
+    ]
+  ]
+}
