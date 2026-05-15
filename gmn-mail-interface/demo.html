@@ -346,10 +346,10 @@
 </head>
 <body>
 
-<div class="demo-banner">Mock-up visivo — nessuna chiamata reale, dati simulati</div>
+<div class="demo-banner">Mock-up visivo — già "loggato" nella demo. Naviga dalla sidebar. Clicca "Vedi login" per la schermata di accesso.</div>
 
 <!-- ============== LOGIN ============== -->
-<section id="screen-login" class="screen active">
+<section id="screen-login" class="screen">
   <div class="login-wrap">
     <div class="login-card">
       <div class="logo">
@@ -375,7 +375,7 @@
 </section>
 
 <!-- ============== APP SHELL ============== -->
-<section id="screen-app" class="screen">
+<section id="screen-app" class="screen active">
   <div class="app">
     <aside class="sidebar">
       <div class="logo">
@@ -406,7 +406,11 @@
           <div class="e" id="user-email">tuo.indirizzo@example.com</div>
         </div>
       </div>
-      <div class="nav-item" onclick="logout()" style="margin-top:4px">
+      <div class="nav-item" onclick="showLoginScreen()" style="margin-top:4px">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        Vedi login
+      </div>
+      <div class="nav-item" onclick="logout()">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
         Esci
       </div>
@@ -966,6 +970,15 @@
   }
   function closeModal() { document.getElementById("modal").classList.remove("open"); }
   function closeModalIfBackdrop(evt) { if (evt.target.id === "modal") closeModal(); }
+
+  function showLoginScreen() {
+    document.getElementById("screen-app").classList.remove("active");
+    document.getElementById("screen-login").classList.add("active");
+    document.getElementById("login-feedback").innerHTML = "";
+  }
+
+  // Render iniziale (la demo si apre già loggata)
+  renderEmails();
 </script>
 
 </body>
