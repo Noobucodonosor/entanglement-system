@@ -329,6 +329,141 @@
   .act-body { flex: 1; font-size: 14px; }
   .act-body .meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
+  /* ---------- Assistente / Chat ---------- */
+  .chat-shell {
+    display: grid; grid-template-columns: 260px 1fr;
+    height: calc(100vh - 30px - 65px); /* viewport - banner - page-header */
+    background: var(--panel);
+  }
+  .conv-list { border-right: 1px solid var(--border); display: flex; flex-direction: column; }
+  .conv-head {
+    padding: 12px; border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .conv-search { flex: 1; }
+  .conv-search input { font-size: 13px; padding: 7px 10px; }
+  .conv-items { flex: 1; overflow-y: auto; padding: 6px; }
+  .conv-item {
+    padding: 10px 12px; border-radius: 8px; cursor: pointer; margin-bottom: 2px;
+  }
+  .conv-item:hover { background: #f3f4f6; }
+  .conv-item.active { background: var(--primary-soft); }
+  .conv-item .t {
+    font-size: 13px; font-weight: 500; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .conv-item .p {
+    font-size: 12px; color: var(--muted); margin-top: 2px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .conv-item .d { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+  .chat-main { display: flex; flex-direction: column; min-width: 0; }
+  .chat-head {
+    padding: 10px 18px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    background: #fafbfc;
+  }
+  .chat-head .title { font-size: 14px; font-weight: 600; }
+  .chat-head .meta { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  .model-select {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 10px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 13px; background: white; cursor: pointer;
+  }
+  .model-select select {
+    border: none; padding: 0; padding-right: 18px; font-size: 13px;
+    background: transparent; cursor: pointer;
+  }
+  .model-select select:focus { box-shadow: none; }
+
+  .messages { flex: 1; overflow-y: auto; padding: 24px; }
+  .msg { display: flex; gap: 12px; margin-bottom: 18px; max-width: 760px; }
+  .msg.user { flex-direction: row-reverse; margin-left: auto; }
+  .msg-avatar {
+    width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: white;
+  }
+  .msg.user .msg-avatar { background: #6b7280; }
+  .msg.ai .msg-avatar { background: linear-gradient(135deg, #6366f1, #8b5cf6); }
+  .msg-bubble {
+    padding: 12px 14px; border-radius: 12px; max-width: 100%;
+    font-size: 14px; line-height: 1.55;
+  }
+  .msg.user .msg-bubble { background: var(--primary); color: white; border-bottom-right-radius: 4px; }
+  .msg.ai .msg-bubble { background: #f9fafb; border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .msg-bubble pre {
+    margin: 8px 0 0; padding: 8px 10px; background: rgba(0,0,0,.04);
+    border-radius: 6px; font-size: 12px; overflow-x: auto;
+    white-space: pre-wrap;
+  }
+  .msg.user .msg-bubble pre { background: rgba(255,255,255,.15); }
+  .msg-foot { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .msg.user .msg-foot { text-align: right; }
+
+  .tool-call {
+    margin: 8px 0; padding: 8px 10px;
+    background: #fef3c7; border: 1px solid #fcd34d; border-radius: 6px;
+    font-size: 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: #78350f; display: flex; align-items: flex-start; gap: 6px;
+  }
+  .tool-call::before {
+    content: "→"; font-weight: bold; flex-shrink: 0;
+  }
+  .tool-result {
+    margin: 4px 0 8px; padding: 6px 10px;
+    background: #ecfdf5; border-left: 3px solid #16a34a;
+    font-size: 12px; color: #065f46;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  .suggestions {
+    display: flex; flex-wrap: wrap; gap: 8px; padding: 0 24px 16px;
+  }
+  .sugg {
+    padding: 8px 14px; border: 1px solid var(--border); border-radius: 20px;
+    background: white; font-size: 13px; color: #374151; cursor: pointer;
+    transition: all .15s;
+  }
+  .sugg:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-soft); }
+
+  .composer {
+    padding: 14px 18px; border-top: 1px solid var(--border); background: var(--panel);
+  }
+  .composer-box {
+    display: flex; align-items: flex-end; gap: 8px;
+    border: 1px solid var(--border); border-radius: 12px; padding: 8px;
+    background: white; transition: border-color .15s, box-shadow .15s;
+  }
+  .composer-box:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(79,70,229,.15); }
+  .composer textarea {
+    flex: 1; border: none; padding: 6px 8px; resize: none; font-size: 14px;
+    max-height: 120px; min-height: 24px;
+  }
+  .composer textarea:focus { box-shadow: none; }
+  .composer-btn {
+    background: var(--primary); color: white; border: none; border-radius: 8px;
+    width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; flex-shrink: 0;
+  }
+  .composer-btn:hover { background: var(--primary-hover); }
+  .composer-btn:disabled { background: #c7d2fe; cursor: not-allowed; }
+  .composer-foot {
+    margin-top: 8px; display: flex; justify-content: space-between;
+    font-size: 11px; color: var(--muted);
+  }
+  .typing {
+    display: inline-flex; gap: 3px; padding: 4px 0;
+  }
+  .typing span {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--muted);
+    animation: bounce 1.2s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.15s; }
+  .typing span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-4px); opacity: 1; } }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
@@ -341,6 +476,8 @@
     .page-header { padding: 14px 16px; }
     thead th, tbody td { padding: 10px 12px; }
     .date { display: none; }
+    .chat-shell { grid-template-columns: 1fr; }
+    .conv-list { display: none; }
   }
 </style>
 </head>
@@ -393,6 +530,10 @@
       <div class="nav-item" data-page="settings" onclick="navTo('settings')">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
         Impostazioni
+      </div>
+      <div class="nav-item" data-page="assistant" onclick="navTo('assistant')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Assistente
       </div>
       <div class="nav-item" data-page="activity" onclick="navTo('activity')">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -705,6 +846,182 @@
         </div>
       </div>
 
+      <!-- ============== Assistente ============== -->
+      <div class="page" id="page-assistant" style="padding:0">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Assistente finanze</div>
+            <div class="page-sub">Chiede informazioni sulle tue email · accesso in lettura al DB</div>
+          </div>
+          <div class="model-select">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <select>
+              <option>Claude Sonnet 4.6</option>
+              <option selected>Claude Opus 4.7</option>
+              <option>GPT-5</option>
+              <option>Gemini 2.5 Pro</option>
+              <option>Llama 3.3 70B</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="chat-shell">
+          <!-- Lista conversazioni -->
+          <aside class="conv-list">
+            <div class="conv-head">
+              <div class="conv-search"><input type="text" placeholder="Cerca..." /></div>
+              <button class="btn btn-primary btn-sm" onclick="newChat()" title="Nuova chat">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+            <div class="conv-items">
+              <div class="conv-item active">
+                <div class="t">Acconti aperti questo mese</div>
+                <div class="p">Riepilogo: 3 clienti, totale € 3.150,00</div>
+                <div class="d">oggi · 14:42</div>
+              </div>
+              <div class="conv-item">
+                <div class="t">Sollecitazione Studio Bianchi</div>
+                <div class="p">Bozza email pronta da rivedere</div>
+                <div class="d">oggi · 11:08</div>
+              </div>
+              <div class="conv-item">
+                <div class="t">Mail urgenti questa settimana</div>
+                <div class="p">2 mail con punteggio ≥ 40</div>
+                <div class="d">ieri</div>
+              </div>
+              <div class="conv-item">
+                <div class="t">Cash flow stimato Q2</div>
+                <div class="p">Estrapolazione da acconti + saldi</div>
+                <div class="d">12 mag</div>
+              </div>
+              <div class="conv-item">
+                <div class="t">Riassumi mail di Elena Conti</div>
+                <div class="p">8 thread, ultimo: saldo Q1</div>
+                <div class="d">10 mag</div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Conversazione -->
+          <div class="chat-main">
+            <div class="chat-head">
+              <div>
+                <div class="title">Acconti aperti questo mese</div>
+                <div class="meta">12 messaggi · 8.4k token · costo $0,063</div>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button class="btn btn-ghost btn-sm" title="Esporta">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+                </button>
+                <button class="btn btn-ghost btn-sm" title="Elimina">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="messages" id="messages">
+              <div class="msg user">
+                <div class="msg-avatar">TI</div>
+                <div>
+                  <div class="msg-bubble">Quanto mi devono in totale gli acconti aperti?</div>
+                  <div class="msg-foot">14:38</div>
+                </div>
+              </div>
+
+              <div class="msg ai">
+                <div class="msg-avatar">AI</div>
+                <div>
+                  <div class="msg-bubble">
+                    Controllo le email con keyword "acconto" e calcolo i totali.
+                    <div class="tool-call">search_emails(keyword="acconto", status="open")</div>
+                    <div class="tool-result">Trovate 3 email con acconti non ancora incassati.</div>
+                    Ecco la situazione:
+                    <ul style="margin:8px 0 0; padding-left:20px;">
+                      <li><b>Studio Bianchi</b> — € 1.350,00 (urgente, dovuto entro 5gg)</li>
+                      <li><b>Marco Rossi</b> — € 960,00 (preventivo accettato)</li>
+                      <li><b>Elena Conti</b> — € 840,00 (saldo Q1, 30gg)</li>
+                    </ul>
+                    <b>Totale: € 3.150,00.</b>
+                  </div>
+                  <div class="msg-foot">14:38 · Claude Opus 4.7 · 320 token · $0,008</div>
+                </div>
+              </div>
+
+              <div class="msg user">
+                <div class="msg-avatar">TI</div>
+                <div>
+                  <div class="msg-bubble">Chi non ha ancora pagato dopo 15 giorni?</div>
+                  <div class="msg-foot">14:40</div>
+                </div>
+              </div>
+
+              <div class="msg ai">
+                <div class="msg-avatar">AI</div>
+                <div>
+                  <div class="msg-bubble">
+                    <div class="tool-call">search_emails(keyword="acconto", received_before="2026-04-30")</div>
+                    <div class="tool-result">1 risultato.</div>
+                    Solo <b>Studio Bianchi</b> ha un acconto fuori finestra: la richiesta è del 28 aprile, sono passati 17 giorni. Vuoi che prepari una sollecitazione cortese?
+                  </div>
+                  <div class="msg-foot">14:40 · Claude Opus 4.7 · 180 token · $0,005</div>
+                </div>
+              </div>
+
+              <div class="msg user">
+                <div class="msg-avatar">TI</div>
+                <div>
+                  <div class="msg-bubble">Sì, scrivi una sollecitazione gentile ma ferma.</div>
+                  <div class="msg-foot">14:41</div>
+                </div>
+              </div>
+
+              <div class="msg ai">
+                <div class="msg-avatar">AI</div>
+                <div>
+                  <div class="msg-bubble">Ecco una bozza:<pre>Oggetto: Sollecito pagamento acconto fattura 142/2026
+
+Gentile Studio Bianchi,
+
+faccio seguito alla vostra comunicazione del 28 aprile relativa
+all'acconto del 30% sulla fattura n. 142/2026 (€ 1.350,00).
+
+Non risulta ancora ricevuto il versamento. Vi chiedo cortesemente
+di confermare la data prevista di pagamento entro la fine della
+settimana.
+
+Resto a disposizione per qualsiasi chiarimento.
+
+Cordiali saluti</pre>
+                  Vuoi che la invii in bozza alla tua casella, o la modifico prima?</div>
+                  <div class="msg-foot">14:42 · Claude Opus 4.7 · 410 token · $0,011</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="suggestions" id="suggestions">
+              <button class="sugg" onclick="quickAsk('Riassumi le mail di oggi')">Riassumi le mail di oggi</button>
+              <button class="sugg" onclick="quickAsk('Acconti totali da incassare questo mese')">Acconti totali da incassare</button>
+              <button class="sugg" onclick="quickAsk('Mail urgenti senza risposta')">Urgenti senza risposta</button>
+              <button class="sugg" onclick="quickAsk('Top 3 clienti per fatturato')">Top 3 clienti</button>
+            </div>
+
+            <div class="composer">
+              <div class="composer-box">
+                <textarea id="chat-input" rows="1" placeholder="Chiedi qualcosa sulle tue email... (es: 'Quanto mi devono in totale?')" oninput="autoGrow(this)" onkeydown="onChatKey(event)"></textarea>
+                <button class="composer-btn" onclick="sendChat()" id="send-btn">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </button>
+              </div>
+              <div class="composer-foot">
+                <span>L'assistente ha accesso in lettura al DB email.</span>
+                <span>Enter per inviare · Shift+Enter per andare a capo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ============== Attività ============== -->
       <div class="page" id="page-activity">
         <div class="page-header">
@@ -970,6 +1287,113 @@
   }
   function closeModal() { document.getElementById("modal").classList.remove("open"); }
   function closeModalIfBackdrop(evt) { if (evt.target.id === "modal") closeModal(); }
+
+  // ---------- Chat assistente ----------
+  function autoGrow(el) {
+    el.style.height = "auto";
+    el.style.height = Math.min(el.scrollHeight, 120) + "px";
+  }
+  function onChatKey(evt) {
+    if (evt.key === "Enter" && !evt.shiftKey) {
+      evt.preventDefault();
+      sendChat();
+    }
+  }
+  function quickAsk(text) {
+    const input = document.getElementById("chat-input");
+    input.value = text;
+    sendChat();
+  }
+
+  const aiCannedReplies = [
+    {
+      tool: "search_emails(period='today')",
+      result: "5 email oggi.",
+      body: "Oggi sono arrivate <b>5 email</b>:\n• 2 con punteggio alto (Studio Bianchi, sollecito acconto)\n• 1 con preventivo da definire (Marco Rossi, ~€ 3.200)\n• 2 newsletter (ignorate)\n\nTotale acconti rilevati oggi: <b>€ 2.310,00</b>.",
+    },
+    {
+      tool: "aggregate_deposits(status='open', month='current')",
+      result: "Somma: € 3.150,00.",
+      body: "Questo mese hai acconti aperti per <b>€ 3.150,00</b> distribuiti su 3 clienti:\n• Studio Bianchi — € 1.350,00\n• Marco Rossi — € 960,00\n• Elena Conti — € 840,00",
+    },
+    {
+      tool: "search_emails(score__gte=30, responded=false)",
+      result: "2 email senza risposta.",
+      body: "Ho trovato <b>2 email urgenti senza risposta</b>:\n• Studio Bianchi — \"URGENTE Acconto fattura 142\" (45 punti)\n• Carla Neri — \"Priorità: revisione contratto\" (20 punti, scadenza venerdì)",
+    },
+    {
+      tool: "rank_senders(by='total_deposits', limit=3)",
+      result: "Top 3 calcolati.",
+      body: "I tuoi <b>3 clienti principali</b> per acconti generati:\n1. Studio Bianchi — € 4.820,00 (12 email)\n2. Elena Conti — € 2.640,00 (8 email)\n3. Marco Rossi — € 1.440,00 (5 email)",
+    },
+  ];
+  let cannedIdx = 0;
+
+  function sendChat() {
+    const input = document.getElementById("chat-input");
+    const text = input.value.trim();
+    if (!text) return;
+    const messages = document.getElementById("messages");
+    const sugg = document.getElementById("suggestions");
+    if (sugg) sugg.style.display = "none";
+
+    const now = new Date().toLocaleTimeString("it-IT", { hour: "2-digit", minute: "2-digit" });
+    messages.insertAdjacentHTML("beforeend", `
+      <div class="msg user">
+        <div class="msg-avatar">TI</div>
+        <div>
+          <div class="msg-bubble">${text.replace(/</g, "&lt;")}</div>
+          <div class="msg-foot">${now}</div>
+        </div>
+      </div>`);
+    input.value = "";
+    autoGrow(input);
+    messages.scrollTop = messages.scrollHeight;
+
+    // Indicatore di "scrittura"
+    const typingId = "typing-" + Date.now();
+    messages.insertAdjacentHTML("beforeend", `
+      <div class="msg ai" id="${typingId}">
+        <div class="msg-avatar">AI</div>
+        <div>
+          <div class="msg-bubble"><div class="typing"><span></span><span></span><span></span></div></div>
+        </div>
+      </div>`);
+    messages.scrollTop = messages.scrollHeight;
+
+    const reply = aiCannedReplies[cannedIdx % aiCannedReplies.length];
+    cannedIdx++;
+    const tokens = 150 + Math.floor(Math.random() * 350);
+    const cost = (tokens * 0.000025).toFixed(4);
+
+    setTimeout(() => {
+      const el = document.getElementById(typingId);
+      el.innerHTML = `
+        <div class="msg-avatar">AI</div>
+        <div>
+          <div class="msg-bubble">
+            <div class="tool-call">${reply.tool}</div>
+            <div class="tool-result">${reply.result}</div>
+            ${reply.body.replace(/\n/g, "<br>")}
+          </div>
+          <div class="msg-foot">${now} · Claude Opus 4.7 · ${tokens} token · $${cost}</div>
+        </div>`;
+      messages.scrollTop = messages.scrollHeight;
+    }, 900);
+  }
+
+  function newChat() {
+    const messages = document.getElementById("messages");
+    messages.innerHTML = `
+      <div class="msg ai">
+        <div class="msg-avatar">AI</div>
+        <div>
+          <div class="msg-bubble">Ciao 👋 sono l'assistente sulle tue email. Posso cercare, riassumere, calcolare totali e scrivere bozze di risposta. Cosa vuoi sapere?</div>
+        </div>
+      </div>`;
+    const sugg = document.getElementById("suggestions");
+    if (sugg) sugg.style.display = "flex";
+  }
 
   function showLoginScreen() {
     document.getElementById("screen-app").classList.remove("active");
