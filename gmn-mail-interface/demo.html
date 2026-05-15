@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GMN Mail Interface — Mock-up</title>
+<style>
+  :root {
+    --bg: #f5f6f8;
+    --panel: #ffffff;
+    --border: #e3e5ea;
+    --text: #1a1d24;
+    --muted: #6b7280;
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --success: #16a34a;
+    --warn: #d97706;
+    --danger: #dc2626;
+    --row-hover: #f9fafb;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.06);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .demo-banner {
+    position: fixed; top: 0; left: 0; right: 0;
+    background: #fef3c7;
+    border-bottom: 1px solid #fcd34d;
+    color: #78350f;
+    font-size: 12px;
+    text-align: center;
+    padding: 6px 12px;
+    z-index: 100;
+  }
+
+  /* ---------- Screens ---------- */
+  .screen { display: none; padding-top: 36px; }
+  .screen.active { display: block; }
+
+  /* ---------- Login ---------- */
+  .login-wrap {
+    min-height: calc(100vh - 36px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .login-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 32px;
+    width: 100%;
+    max-width: 380px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 24px;
+  }
+  .logo-mark {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 16px;
+  }
+  .logo-text { font-weight: 600; font-size: 16px; }
+  .login-card h1 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .login-card p.sub {
+    color: var(--muted);
+    font-size: 14px;
+    margin: 0 0 24px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #374151;
+  }
+  input[type="email"], input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: white;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input[type="email"]:focus, input[type="text"]:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79,70,229,.15);
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background .15s, border-color .15s, color .15s, transform .05s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--primary-hover); }
+  .btn-primary:disabled { background: #a5a3e0; cursor: not-allowed; }
+  .btn-secondary {
+    background: white;
+    color: #374151;
+    border-color: var(--border);
+  }
+  .btn-secondary:hover { background: #f9fafb; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border-color: transparent;
+    padding: 6px 10px;
+  }
+  .btn-ghost:hover { color: var(--text); background: #f3f4f6; }
+  .btn-block { width: 100%; }
+
+  .divider {
+    display: flex; align-items: center; gap: 12px;
+    color: var(--muted); font-size: 12px;
+    margin: 20px 0;
+  }
+  .divider::before, .divider::after {
+    content: ""; flex: 1; height: 1px; background: var(--border);
+  }
+
+  .alert {
+    margin-top: 16px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .alert.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .alert.info    { background: #eff6ff; color: #1e3a8a; border: 1px solid #bfdbfe; }
+
+  .magic-link-mock {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    word-break: break-all;
+    background: #fafafa;
+  }
+  .magic-link-mock a { color: var(--primary); text-decoration: none; }
+  .magic-link-mock a:hover { text-decoration: underline; }
+
+  /* ---------- Dashboard ---------- */
+  .app-header {
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 36px;
+    z-index: 10;
+  }
+  .user-chip {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+  .stat-value {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .stat-value .unit { color: var(--muted); font-size: 14px; font-weight: 400; }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .panel-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+  .panel-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .panel-actions {
+    display: flex; gap: 8px;
+  }
+
+  .upload-row {
+    padding: 16px 18px;
+    display: flex; gap: 10px; align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: #fafbfc;
+  }
+  .file-input-wrap {
+    flex: 1;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .file-input-wrap label.file-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 12px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    background: white;
+  }
+  .file-input-wrap label.file-label:hover { border-color: var(--primary); color: var(--primary); }
+  .file-input-wrap input[type="file"] { display: none; }
+  .file-name { font-size: 13px; color: #374151; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  thead th {
+    text-align: left;
+    padding: 10px 18px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: #fafbfc;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 12px 18px;
+    border-bottom: 1px solid #f1f2f5;
+    vertical-align: middle;
+  }
+  tbody tr { cursor: pointer; transition: background .1s; }
+  tbody tr:hover { background: var(--row-hover); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .sender { display: flex; align-items: center; gap: 10px; }
+  .sender .avatar { width: 24px; height: 24px; font-size: 11px; }
+  .sender .name { font-weight: 500; }
+
+  .subject { color: #374151; }
+  .subject small { color: var(--muted); display: block; font-size: 12px; }
+
+  .badge {
+    display: inline-flex;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .badge.high   { background: #fee2e2; color: #991b1b; }
+  .badge.medium { background: #fef3c7; color: #92400e; }
+  .badge.low    { background: #e0e7ff; color: #3730a3; }
+  .badge.zero   { background: #f3f4f6; color: #6b7280; }
+
+  .amount { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .amount.zero { color: var(--muted); font-weight: 400; }
+
+  .date { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+
+  /* Detail modal */
+  .modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.5);
+    z-index: 50;
+    align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  .modal-backdrop.open { display: flex; }
+  .modal {
+    background: var(--panel);
+    border-radius: 12px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.2);
+    max-width: 640px; width: 100%;
+    max-height: 80vh;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .modal-head {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+  }
+  .modal-head h3 { margin: 0 0 4px; font-size: 16px; }
+  .modal-head .meta { font-size: 13px; color: var(--muted); }
+  .modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    color: #1f2937;
+  }
+  .modal-foot {
+    padding: 12px 20px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+    background: #fafbfc;
+  }
+  .modal-stats { display: flex; gap: 18px; font-size: 13px; color: var(--muted); }
+  .modal-stats b { color: var(--text); font-variant-numeric: tabular-nums; }
+
+  .icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+  @media (max-width: 720px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .app-header { padding: 12px 16px; }
+    .container { padding: 16px; }
+    thead th, tbody td { padding: 10px 12px; }
+    .date { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  Mock-up visivo — nessuna chiamata reale al backend, dati simulati in memoria
+</div>
+
+<!-- ============== LOGIN ============== -->
+<section id="screen-login" class="screen active">
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="logo">
+        <div class="logo-mark">G</div>
+        <div class="logo-text">GMN Mail Interface</div>
+      </div>
+      <h1>Accedi</h1>
+      <p class="sub">Inserisci il tuo indirizzo: ti mandiamo un magic link.</p>
+
+      <form id="login-form" autocomplete="off">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="tu@example.com" value="tuo.indirizzo@example.com" />
+        <div style="height:14px"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="login-submit">
+          Inviami il magic link
+        </button>
+      </form>
+
+      <div id="login-feedback"></div>
+
+      <div class="divider">oppure</div>
+
+      <button class="btn btn-secondary btn-block" onclick="goToDashboard()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 12c0-5.5-4.5-10-10-10S2 6.5 2 12s4.5 10 10 10c5 0 9.3-3.7 9.9-8.5H12v-3h10c0 .5 0 1 0 1.5z" fill="#4285F4"/>
+        </svg>
+        Continua con Google
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DASHBOARD ============== -->
+<section id="screen-dashboard" class="screen">
+  <header class="app-header">
+    <div class="logo">
+      <div class="logo-mark">G</div>
+      <div class="logo-text">GMN Mail Interface</div>
+    </div>
+    <div class="user-chip">
+      <div class="avatar" id="user-avatar">TI</div>
+      <span id="user-email">tuo.indirizzo@example.com</span>
+      <button class="btn btn-ghost" onclick="logout()">Esci</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Email totali</div>
+        <div class="stat-value" id="stat-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Punteggio medio</div>
+        <div class="stat-value" id="stat-score">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Acconti stimati</div>
+        <div class="stat-value" id="stat-deposits">€ 0,00</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Ultimo aggiornamento</div>
+        <div class="stat-value" style="font-size:14px; font-weight:500;" id="stat-updated">—</div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Casella elaborata</div>
+        <div class="panel-actions">
+          <button class="btn btn-secondary" onclick="refreshIngest()">Aggiorna IMAP</button>
+        </div>
+      </div>
+
+      <div class="upload-row">
+        <div class="file-input-wrap">
+          <label class="file-label" for="file-input">
+            <svg class="icon" viewBox="0 0 24 24" fill="none"><path d="M12 4v12m0 0l-4-4m4 4l4-4M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Scegli file .eml
+          </label>
+          <input type="file" id="file-input" accept=".eml" onchange="onFileChosen(event)" />
+          <span class="file-name" id="file-name">Nessun file</span>
+        </div>
+        <button class="btn btn-primary" id="upload-btn" disabled onclick="uploadFile()">Carica</button>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Mittente</th>
+            <th>Oggetto</th>
+            <th>Punteggio</th>
+            <th>Acconto</th>
+            <th>Ricevuta</th>
+          </tr>
+        </thead>
+        <tbody id="email-rows"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DETAIL MODAL ============== -->
+<div class="modal-backdrop" id="modal" onclick="closeModalIfBackdrop(event)">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <h3 id="m-subject"></h3>
+        <div class="meta" id="m-meta"></div>
+      </div>
+      <button class="btn btn-ghost" onclick="closeModal()">Chiudi</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+    <div class="modal-foot">
+      <div class="modal-stats">
+        <span>Punteggio: <b id="m-score">0</b></span>
+        <span>Acconto: <b id="m-deposit">€ 0,00</b></span>
+      </div>
+      <button class="btn btn-secondary" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- Mock data ----------
+  const seedEmails = [
+    {
+      id: 1,
+      sender: { name: "Studio Bianchi", email: "amministrazione@studiobianchi.it" },
+      subject: "URGENTE — Acconto fattura n. 142/2026",
+      body: "Buongiorno,\nle ricordo che è dovuto un acconto del 30% sulla fattura n. 142/2026 di importo 4.500,00 €.\nLa preghiamo di provvedere entro 5 giorni.\n\nCordiali saluti,\nStudio Bianchi",
+      received_at: "2026-05-15T09:14:00",
+      score: 45,
+      deposit: 1350.00,
+    },
+    {
+      id: 2,
+      sender: { name: "Marco Rossi", email: "marco.rossi@cliente.it" },
+      subject: "Richiesta preventivo — sito vetrina",
+      body: "Ciao,\nci servirebbe un preventivo per un sito vetrina con 6 sezioni e blog.\nBudget intorno ai 3.200 €. Quando puoi mandarmi una stima?\n\nGrazie,\nMarco",
+      received_at: "2026-05-15T08:42:00",
+      score: 10,
+      deposit: 960.00,
+    },
+    {
+      id: 3,
+      sender: { name: "Elena Conti", email: "e.conti@partner.com" },
+      subject: "Saldo progetto Q1 — fattura allegata",
+      body: "Allego la fattura per il saldo del progetto Q1.\nImporto: 2.800 €. Termine pagamento 30 giorni.\n\nGrazie,\nElena",
+      received_at: "2026-05-14T17:30:00",
+      score: 25,
+      deposit: 840.00,
+    },
+    {
+      id: 4,
+      sender: { name: "Newsletter Tech", email: "no-reply@newslettertech.io" },
+      subject: "5 nuovi articoli questa settimana",
+      body: "Ecco i nuovi articoli pubblicati questa settimana sul nostro blog...",
+      received_at: "2026-05-14T08:00:00",
+      score: 0,
+      deposit: 0,
+    },
+    {
+      id: 5,
+      sender: { name: "Carla Neri", email: "carla.neri@example.org" },
+      subject: "Priorità: revisione contratto allegato",
+      body: "Ti chiedo per priorità di rivedere il contratto allegato e darmi un feedback entro venerdì.\nNon ci sono importi da definire in questa fase.",
+      received_at: "2026-05-13T15:12:00",
+      score: 20,
+      deposit: 0,
+    },
+  ];
+
+  let emails = [...seedEmails];
+
+  // ---------- Helpers ----------
+  function fmtMoney(n) {
+    return new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR" }).format(n);
+  }
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleString("it-IT", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" });
+  }
+  function initials(s) {
+    return s.split(/[\s.@]+/).filter(Boolean).slice(0, 2).map(p => p[0]?.toUpperCase() || "").join("");
+  }
+  function scoreBadge(score) {
+    if (score === 0) return { cls: "zero", label: "0" };
+    if (score >= 30) return { cls: "high", label: score };
+    if (score >= 15) return { cls: "medium", label: score };
+    return { cls: "low", label: score };
+  }
+
+  // ---------- Render ----------
+  function renderEmails() {
+    const tbody = document.getElementById("email-rows");
+    tbody.innerHTML = emails.map(e => {
+      const b = scoreBadge(e.score);
+      return `
+        <tr onclick="openDetail(${e.id})">
+          <td>
+            <div class="sender">
+              <div class="avatar">${initials(e.sender.name)}</div>
+              <div>
+                <div class="name">${e.sender.name}</div>
+                <small style="color:var(--muted); font-size:12px;">${e.sender.email}</small>
+              </div>
+            </div>
+          </td>
+          <td class="subject">${e.subject}</td>
+          <td><span class="badge ${b.cls}">${b.label}</span></td>
+          <td class="amount ${e.deposit === 0 ? 'zero' : ''}">${e.deposit ? fmtMoney(e.deposit) : "—"}</td>
+          <td class="date">${fmtDate(e.received_at)}</td>
+        </tr>
+      `;
+    }).join("");
+
+    document.getElementById("stat-total").textContent = emails.length;
+    const avgScore = emails.length
+      ? Math.round(emails.reduce((s, e) => s + e.score, 0) / emails.length)
+      : 0;
+    document.getElementById("stat-score").textContent = avgScore;
+    const totalDeposits = emails.reduce((s, e) => s + (e.deposit || 0), 0);
+    document.getElementById("stat-deposits").innerHTML = fmtMoney(totalDeposits);
+    document.getElementById("stat-updated").textContent = fmtDate(new Date().toISOString());
+  }
+
+  // ---------- Login flow ----------
+  document.getElementById("login-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const btn = document.getElementById("login-submit");
+    const fb = document.getElementById("login-feedback");
+    btn.disabled = true;
+    btn.textContent = "Invio...";
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.textContent = "Inviami il magic link";
+      fb.innerHTML = `
+        <div class="alert success">Email inviata a <b>${email}</b>. Controlla la casella.</div>
+        <div class="magic-link-mock">
+          [DEMO] Magic link generato:<br>
+          <a href="#" onclick="event.preventDefault(); goToDashboard('${email}')">https://gmn-mail.example.com/api/auth/verify?token=eyJhbGciOi...</a>
+        </div>
+      `;
+    }, 700);
+  });
+
+  function goToDashboard(email) {
+    if (email) {
+      document.getElementById("user-email").textContent = email;
+      document.getElementById("user-avatar").textContent = initials(email);
+    }
+    document.getElementById("screen-login").classList.remove("active");
+    document.getElementById("screen-dashboard").classList.add("active");
+    renderEmails();
+  }
+
+  function logout() {
+    document.getElementById("screen-dashboard").classList.remove("active");
+    document.getElementById("screen-login").classList.add("active");
+    document.getElementById("login-feedback").innerHTML = "";
+  }
+
+  // ---------- Upload (simulato) ----------
+  let chosenFile = null;
+  function onFileChosen(evt) {
+    chosenFile = evt.target.files[0] || null;
+    document.getElementById("file-name").textContent = chosenFile ? chosenFile.name : "Nessun file";
+    document.getElementById("upload-btn").disabled = !chosenFile;
+  }
+  function uploadFile() {
+    if (!chosenFile) return;
+    const fakeSubjects = [
+      "Conferma ordine #" + Math.floor(Math.random() * 9000 + 1000),
+      "Fattura allegata — pagamento entro 30gg",
+      "Richiesta acconto progetto",
+    ];
+    const fakeSenders = [
+      { name: "Luca Verdi", email: "luca.verdi@example.com" },
+      { name: "Anna Russo", email: "a.russo@studio.it" },
+      { name: "Davide Esposito", email: "davide@partner.io" },
+    ];
+    const importo = Math.floor(Math.random() * 4000 + 800);
+    const score = Math.floor(Math.random() * 40 + 10);
+    const newEmail = {
+      id: Date.now(),
+      sender: fakeSenders[Math.floor(Math.random() * fakeSenders.length)],
+      subject: fakeSubjects[Math.floor(Math.random() * fakeSubjects.length)],
+      body: `[Email caricata da file: ${chosenFile.name}]\n\nImporto rilevato: ${fmtMoney(importo)}\nKeyword trovate nel testo.`,
+      received_at: new Date().toISOString(),
+      score,
+      deposit: +(importo * 0.30).toFixed(2),
+    };
+    emails = [newEmail, ...emails];
+    chosenFile = null;
+    document.getElementById("file-input").value = "";
+    document.getElementById("file-name").textContent = "Nessun file";
+    document.getElementById("upload-btn").disabled = true;
+    renderEmails();
+  }
+
+  function refreshIngest() {
+    const senders = [
+      { name: "Sistema PEC", email: "notifica@pec.example.it" },
+      { name: "Banca Intesa", email: "noreply@intesa.it" },
+    ];
+    const importo = Math.floor(Math.random() * 5000 + 1000);
+    emails = [{
+      id: Date.now(),
+      sender: senders[Math.floor(Math.random() * senders.length)],
+      subject: "Nuova notifica acconto ricevuta",
+      body: "Ricevuta notifica acconto per " + fmtMoney(importo) + ".",
+      received_at: new Date().toISOString(),
+      score: 35,
+      deposit: +(importo * 0.30).toFixed(2),
+    }, ...emails];
+    renderEmails();
+  }
+
+  // ---------- Detail modal ----------
+  function openDetail(id) {
+    const e = emails.find(x => x.id === id);
+    if (!e) return;
+    document.getElementById("m-subject").textContent = e.subject;
+    document.getElementById("m-meta").textContent = `${e.sender.name} <${e.sender.email}> · ${fmtDate(e.received_at)}`;
+    document.getElementById("m-body").textContent = e.body;
+    document.getElementById("m-score").textContent = e.score;
+    document.getElementById("m-deposit").textContent = e.deposit ? fmtMoney(e.deposit) : "—";
+    document.getElementById("modal").classList.add("open");
+  }
+  function closeModal() {
+    document.getElementById("modal").classList.remove("open");
+  }
+  function closeModalIfBackdrop(evt) {
+    if (evt.target.id === "modal") closeModal();
+  }
+</script>
+
+</body>
+</html>
