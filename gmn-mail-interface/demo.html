@@ -464,6 +464,170 @@
   .typing span:nth-child(3) { animation-delay: 0.3s; }
   @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-4px); opacity: 1; } }
 
+  /* ---------- Email detail page ---------- */
+  .email-detail { display: grid; grid-template-columns: 1fr 280px; gap: 20px; }
+  .email-head {
+    display: flex; gap: 14px; padding: 18px; border-bottom: 1px solid var(--border);
+  }
+  .email-head .avatar { width: 40px; height: 40px; font-size: 14px; }
+  .email-head h2 { margin: 0 0 4px; font-size: 18px; letter-spacing: -0.01em; }
+  .email-head .from { font-size: 13px; color: #374151; }
+  .email-head .from b { color: var(--text); }
+  .email-head .when { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .email-body {
+    padding: 20px; font-size: 14px; line-height: 1.6; color: #1f2937;
+    white-space: pre-wrap;
+  }
+  .email-actions {
+    padding: 14px 18px; border-top: 1px solid var(--border); background: #fafbfc;
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .email-meta {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; align-self: flex-start;
+  }
+  .email-meta h4 { margin: 0 0 12px; font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .meta-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 13px; border-bottom: 1px solid #f3f4f6; }
+  .meta-row:last-child { border-bottom: none; }
+  .meta-row .k { color: var(--muted); }
+  .meta-row .v { font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* ---------- Compose ---------- */
+  .compose-form .form-row { padding: 12px 18px; border-bottom: 1px solid #f3f4f6; grid-template-columns: 80px 1fr; align-items: center; }
+  .compose-form .form-row label { margin: 0; color: var(--muted); }
+  .compose-form .form-row input,
+  .compose-form .form-row select { border: none; padding: 4px 0; box-shadow: none; font-size: 14px; }
+  .compose-form .form-row input:focus { box-shadow: none; }
+  .compose-form textarea {
+    width: 100%; padding: 18px; border: none; min-height: 280px;
+    font-size: 14px; line-height: 1.6; font-family: inherit;
+  }
+  .compose-form textarea:focus { box-shadow: none; }
+  .compose-foot {
+    padding: 12px 18px; border-top: 1px solid var(--border); background: #fafbfc;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .ai-hint {
+    margin: 0 18px 12px; padding: 10px 12px; background: var(--primary-soft);
+    border-radius: 8px; font-size: 13px; color: var(--primary);
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* ---------- Onboarding ---------- */
+  .onboarding {
+    display: none; position: fixed; inset: 30px 0 0 0;
+    background: var(--bg); z-index: 80; overflow-y: auto;
+  }
+  .onboarding.open { display: block; }
+  .onb-wrap { max-width: 560px; margin: 40px auto; padding: 24px; }
+  .onb-steps { display: flex; gap: 6px; margin-bottom: 28px; }
+  .onb-step {
+    flex: 1; height: 4px; border-radius: 2px; background: var(--border);
+  }
+  .onb-step.done { background: var(--success); }
+  .onb-step.active { background: var(--primary); }
+  .onb-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+    box-shadow: var(--shadow); padding: 28px;
+  }
+  .onb-card h2 { margin: 0 0 6px; font-size: 22px; letter-spacing: -0.01em; }
+  .onb-card .sub { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+  .onb-card .row { margin-bottom: 14px; }
+  .onb-foot {
+    margin-top: 24px; display: flex; justify-content: space-between; gap: 10px;
+  }
+  .onb-step-page { display: none; }
+  .onb-step-page.active { display: block; }
+  .onb-help {
+    font-size: 12px; color: var(--muted); margin-top: 6px;
+  }
+  .onb-help a { color: var(--primary); }
+  .onb-summary {
+    background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 10px;
+    padding: 16px; margin: 16px 0;
+  }
+  .onb-summary div { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; }
+  .onb-summary b { color: #065f46; }
+
+  /* ---------- AI costs ---------- */
+  .cost-bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 160px; padding: 10px 0; }
+  .cost-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 0; }
+  .cost-bar {
+    width: 100%; background: linear-gradient(180deg, #34d399, #10b981);
+    border-radius: 3px 3px 0 0; min-height: 2px;
+  }
+  .cost-bar-lab { font-size: 10px; color: var(--muted); }
+  .progress {
+    width: 100%; height: 8px; background: #f3f4f6; border-radius: 4px; overflow: hidden;
+  }
+  .progress > div { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 4px; }
+  .progress.warn > div { background: linear-gradient(90deg, #f59e0b, #d97706); }
+  .progress.danger > div { background: linear-gradient(90deg, #f87171, #dc2626); }
+
+  /* ---------- Profilo ---------- */
+  .profile-grid { display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+  .profile-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px; text-align: center;
+  }
+  .profile-card .avatar { width: 72px; height: 72px; font-size: 28px; margin: 0 auto 12px; }
+  .profile-card h3 { margin: 0 0 4px; font-size: 16px; }
+  .profile-card .e { color: var(--muted); font-size: 13px; }
+  .session-item {
+    display: flex; gap: 12px; padding: 12px 0; border-bottom: 1px solid #f1f2f5;
+  }
+  .session-item:last-child { border-bottom: none; }
+  .session-item .ico {
+    width: 36px; height: 36px; border-radius: 8px; background: #f3f4f6;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .session-item .body { flex: 1; font-size: 13px; }
+  .session-item .body b { font-size: 14px; }
+  .session-item .body .m { color: var(--muted); margin-top: 2px; }
+  .session-item.current b::after {
+    content: " · attiva"; font-weight: 500; color: var(--success);
+  }
+
+  /* ---------- Empty states ---------- */
+  .empty {
+    padding: 60px 20px; text-align: center; color: var(--muted);
+  }
+  .empty .ico {
+    width: 64px; height: 64px; border-radius: 16px; background: #f3f4f6;
+    display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+    color: #9ca3af;
+  }
+  .empty h3 { margin: 0 0 6px; font-size: 16px; color: var(--text); }
+  .empty p { margin: 0 0 16px; font-size: 13px; }
+
+  /* ---------- Error screens ---------- */
+  .error-screen {
+    display: none; padding: 80px 24px; text-align: center;
+  }
+  .error-screen.open { display: block; }
+  .error-screen .icon-big {
+    width: 80px; height: 80px; border-radius: 20px;
+    background: #fee2e2; color: var(--danger);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+  }
+  .error-screen .icon-big svg { width: 36px; height: 36px; }
+  .error-screen h2 { font-size: 22px; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .error-screen p { color: var(--muted); font-size: 14px; max-width: 440px; margin: 0 auto 20px; line-height: 1.55; }
+  .error-screen .err-details {
+    background: #1a1d24; color: #e5e7eb; border-radius: 8px; padding: 12px 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px;
+    max-width: 540px; margin: 0 auto 20px; text-align: left; white-space: pre;
+    overflow-x: auto;
+  }
+
+  /* ---------- Generic ---------- */
+  .back-link {
+    display: inline-flex; align-items: center; gap: 6px; color: var(--muted);
+    text-decoration: none; font-size: 13px; cursor: pointer;
+  }
+  .back-link:hover { color: var(--text); }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
@@ -478,6 +642,8 @@
     .date { display: none; }
     .chat-shell { grid-template-columns: 1fr; }
     .conv-list { display: none; }
+    .email-detail { grid-template-columns: 1fr; }
+    .profile-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -535,9 +701,17 @@
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         Assistente
       </div>
+      <div class="nav-item" data-page="ai-costs" onclick="navTo('ai-costs')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Costi AI
+      </div>
       <div class="nav-item" data-page="activity" onclick="navTo('activity')">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
         Attività
+      </div>
+      <div class="nav-item" data-page="profile" onclick="navTo('profile')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Profilo
       </div>
       <div class="nav-spacer"></div>
       <div class="nav-user">
@@ -547,9 +721,18 @@
           <div class="e" id="user-email">tuo.indirizzo@example.com</div>
         </div>
       </div>
-      <div class="nav-item" onclick="showLoginScreen()" style="margin-top:4px">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      <div style="margin-top:8px; padding: 8px 10px 4px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em;">Demo</div>
+      <div class="nav-item" onclick="showLoginScreen()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
         Vedi login
+      </div>
+      <div class="nav-item" onclick="openOnboarding()">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Onboarding
+      </div>
+      <div class="nav-item" onclick="showError('backend')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+        Schermate errore
       </div>
       <div class="nav-item" onclick="logout()">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
@@ -601,6 +784,9 @@
               <div>
                 <div class="panel-title">Casella elaborata</div>
                 <div class="panel-sub">Click su una riga per il dettaglio</div>
+              </div>
+              <div class="panel-actions">
+                <button class="btn btn-secondary btn-sm" onclick="toggleEmpty()">Stato vuoto (demo)</button>
               </div>
             </div>
             <div class="upload-row">
@@ -1022,6 +1208,373 @@ Cordiali saluti</pre>
         </div>
       </div>
 
+      <!-- ============== Email dettaglio (pagina completa) ============== -->
+      <div class="page" id="page-email-detail">
+        <div class="page-header">
+          <div>
+            <span class="back-link" onclick="navTo('dashboard')">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Torna alle email
+            </span>
+            <div class="page-title" style="margin-top: 4px;">URGENTE — Acconto fattura n. 142/2026</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" onclick="navTo('compose')">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8M3 3v5h5"/></svg>
+              Rispondi
+            </button>
+            <button class="btn btn-secondary">Inoltra</button>
+            <button class="btn btn-secondary">Archivia</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="email-detail">
+            <div class="panel" style="margin-bottom: 0;">
+              <div class="email-head">
+                <div class="avatar">SB</div>
+                <div style="flex:1; min-width:0;">
+                  <h2>URGENTE — Acconto fattura n. 142/2026</h2>
+                  <div class="from"><b>Studio Bianchi</b> &lt;amministrazione@studiobianchi.it&gt; <span style="color:var(--muted)">→ tu@example.com</span></div>
+                  <div class="when">15 maggio 2026 · 09:14</div>
+                </div>
+                <span class="badge high">Punteggio 45</span>
+              </div>
+
+              <div class="email-body">Buongiorno,
+
+le ricordo che è dovuto un acconto del <b>30%</b> sulla fattura n. 142/2026 di importo <b>4.500,00 €</b>.
+
+La preghiamo di provvedere entro 5 giorni dal ricevimento di questa comunicazione, come da accordi.
+
+Per qualsiasi necessità rimaniamo a disposizione.
+
+Cordiali saluti,
+Studio Bianchi</div>
+
+              <div class="email-actions">
+                <button class="btn btn-primary" onclick="navTo('compose')">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16M21 21v-5h-5"/></svg>
+                  Rispondi
+                </button>
+                <button class="btn btn-secondary">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  Chiedi all'AI
+                </button>
+                <button class="btn btn-secondary">Marca come letto</button>
+                <button class="btn btn-secondary">Importante ★</button>
+                <div style="flex:1"></div>
+                <button class="btn btn-danger">Elimina</button>
+              </div>
+            </div>
+
+            <div>
+              <div class="email-meta">
+                <h4>Estrazione automatica</h4>
+                <div class="meta-row"><span class="k">Punteggio</span><span class="v"><span class="badge high">45</span></span></div>
+                <div class="meta-row"><span class="k">Importo trovato</span><span class="v">€ 4.500,00</span></div>
+                <div class="meta-row"><span class="k">Acconto stimato</span><span class="v">€ 1.350,00</span></div>
+                <div class="meta-row"><span class="k">Percentuale</span><span class="v">30 %</span></div>
+                <div class="meta-row"><span class="k">Keyword rilevate</span><span class="v" style="font-size:11px; text-align:right;">urgente, acconto, fattura</span></div>
+              </div>
+
+              <div class="email-meta" style="margin-top: 16px;">
+                <h4>Allegati</h4>
+                <div class="meta-row">
+                  <span class="k">📎 fattura_142.pdf</span>
+                  <span class="v" style="font-size:11px;">182 KB</span>
+                </div>
+              </div>
+
+              <div class="email-meta" style="margin-top: 16px;">
+                <h4>Thread</h4>
+                <div class="meta-row"><span class="k">12 messaggi · Studio Bianchi</span></div>
+                <a href="#" style="font-size:12px; color: var(--primary); display:block; margin-top: 8px;">Vedi conversazione →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== Compose ============== -->
+      <div class="page" id="page-compose">
+        <div class="page-header">
+          <div>
+            <span class="back-link" onclick="navTo('dashboard')">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+              Annulla
+            </span>
+            <div class="page-title" style="margin-top: 4px;">Risposta a Studio Bianchi</div>
+          </div>
+        </div>
+
+        <div class="content" style="max-width: 800px;">
+          <div class="panel">
+            <div class="compose-form">
+              <div class="form-row"><label>A</label><input type="text" value="amministrazione@studiobianchi.it"/></div>
+              <div class="form-row"><label>Cc</label><input type="text" placeholder="Aggiungi destinatari in copia"/></div>
+              <div class="form-row"><label>Oggetto</label><input type="text" value="Re: URGENTE — Acconto fattura n. 142/2026"/></div>
+              <textarea>Gentile Studio Bianchi,
+
+vi confermo che provvederò al pagamento dell'acconto entro la fine della settimana.
+
+Vi invierò ricevuta del bonifico non appena effettuato.
+
+Cordiali saluti</textarea>
+
+              <div class="ai-hint">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>Suggerimento AI: il tono è cortese, ma puoi essere più specifico indicando la data esatta di pagamento. <a href="#" style="font-weight:500">Riscrivi</a></span>
+              </div>
+
+              <div class="compose-foot">
+                <div style="display:flex; gap:8px;">
+                  <button class="btn btn-primary">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    Invia
+                  </button>
+                  <button class="btn btn-secondary">Salva bozza</button>
+                  <button class="btn btn-secondary">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66L9.41 17.41a2 2 0 0 1-2.83-2.83L15.5 5.66"/></svg>
+                    Allega
+                  </button>
+                </div>
+                <button class="btn btn-ghost">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                  Migliora con AI
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== Costi AI ============== -->
+      <div class="page" id="page-ai-costs">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Configurazione & costi AI</div>
+            <div class="page-sub">OpenRouter · modello di default, budget mensile e consumo</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-label">Spesa questo mese</div>
+              <div class="stat-value">$ 4,82</div>
+              <div class="stat-delta">su $ 20,00 di budget</div>
+              <div class="progress" style="margin-top: 10px;"><div style="width: 24%"></div></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Richieste</div>
+              <div class="stat-value">312</div>
+              <div class="stat-delta up">+47 questa settimana</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Token totali</div>
+              <div class="stat-value">198k</div>
+              <div class="stat-delta">in / out ~ 60% / 40%</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Costo medio / richiesta</div>
+              <div class="stat-value">$ 0,015</div>
+              <div class="stat-delta">Claude Opus 4.7</div>
+            </div>
+          </div>
+
+          <div class="charts-grid">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <div class="panel-title">Spesa giornaliera</div>
+                  <div class="panel-sub">Ultimi 14 giorni</div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="cost-bar-chart" id="cost-bar-chart"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div class="panel-title">Spesa per modello</div>
+              </div>
+              <div class="panel-body">
+                <div class="donut-wrap">
+                  <svg class="donut" viewBox="0 0 42 42">
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#f3f4f6" stroke-width="6"/>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#4f46e5" stroke-width="6" stroke-dasharray="55 45" stroke-dashoffset="25" transform="rotate(-90 21 21)"/>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#10b981" stroke-width="6" stroke-dasharray="25 75" stroke-dashoffset="-30" transform="rotate(-90 21 21)"/>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#f59e0b" stroke-width="6" stroke-dasharray="15 85" stroke-dashoffset="-55" transform="rotate(-90 21 21)"/>
+                    <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="#9ca3af" stroke-width="6" stroke-dasharray="5 95" stroke-dashoffset="-70" transform="rotate(-90 21 21)"/>
+                  </svg>
+                  <div class="donut-legend">
+                    <div class="li"><span class="sw" style="background:#4f46e5"></span>Claude Opus 4.7 <span class="val">$ 2,65</span></div>
+                    <div class="li"><span class="sw" style="background:#10b981"></span>Claude Sonnet 4.6 <span class="val">$ 1,20</span></div>
+                    <div class="li"><span class="sw" style="background:#f59e0b"></span>GPT-5 <span class="val">$ 0,72</span></div>
+                    <div class="li"><span class="sw" style="background:#9ca3af"></span>Altri <span class="val">$ 0,25</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Configurazione</div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>API Key OpenRouter <span class="badge ok"><span class="dot"></span>Configurata</span></h4>
+                <p>sk-or-v1-•••••••••••••••••••••••••••••••••••a8c2</p>
+              </div>
+              <div class="setting-control">
+                <button class="btn btn-secondary btn-sm">Sostituisci</button>
+                <button class="btn btn-danger btn-sm">Rimuovi</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Modello di default</h4>
+                <p>Usato quando l'utente non sceglie esplicitamente un modello</p>
+              </div>
+              <div class="setting-control">
+                <select style="width: 200px;">
+                  <option>Claude Sonnet 4.6</option>
+                  <option selected>Claude Opus 4.7</option>
+                  <option>GPT-5</option>
+                  <option>Gemini 2.5 Pro</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Budget mensile</h4>
+                <p>L'assistente si disabilita quando il limite è raggiunto</p>
+              </div>
+              <div class="setting-control">
+                <span style="color: var(--muted);">$</span>
+                <input type="number" value="20" style="width: 80px; text-align: right;"/>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-info">
+                <h4>Avviso al 80%</h4>
+                <p>Ricevi un'email quando ti avvicini al limite</p>
+              </div>
+              <div class="setting-control">
+                <input type="checkbox" checked style="width: auto;"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Chiamate recenti</div>
+              <button class="btn btn-secondary btn-sm">Esporta CSV</button>
+            </div>
+            <table>
+              <thead><tr><th>Quando</th><th>Modello</th><th>Token (in / out)</th><th>Costo</th><th>Trigger</th></tr></thead>
+              <tbody>
+                <tr><td class="date">15 mag · 14:42</td><td>Claude Opus 4.7</td><td>2.140 / 410</td><td class="amount">$ 0,054</td><td>Chat: "Acconti aperti"</td></tr>
+                <tr><td class="date">15 mag · 14:40</td><td>Claude Opus 4.7</td><td>1.890 / 180</td><td class="amount">$ 0,041</td><td>Chat: "Chi non ha pagato"</td></tr>
+                <tr><td class="date">15 mag · 14:38</td><td>Claude Opus 4.7</td><td>1.520 / 320</td><td class="amount">$ 0,038</td><td>Chat: "Totale acconti"</td></tr>
+                <tr><td class="date">15 mag · 11:08</td><td>Claude Sonnet 4.6</td><td>2.880 / 720</td><td class="amount">$ 0,028</td><td>Chat: "Sollecitazione"</td></tr>
+                <tr><td class="date">15 mag · 09:14</td><td>Claude Sonnet 4.6</td><td>620 / 95</td><td class="amount">$ 0,005</td><td>Auto: classifica mail</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============== Profilo ============== -->
+      <div class="page" id="page-profile">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Profilo</div>
+            <div class="page-sub">Account, sessioni e sicurezza</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="profile-grid">
+            <div>
+              <div class="profile-card">
+                <div class="avatar" id="profile-avatar">TI</div>
+                <h3 id="profile-name">Tuo Indirizzo</h3>
+                <div class="e" id="profile-email">tuo.indirizzo@example.com</div>
+                <div style="margin-top: 16px;"><button class="btn btn-secondary btn-sm btn-block">Cambia immagine</button></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="panel">
+                <div class="panel-header"><div class="panel-title">Informazioni account</div></div>
+                <div class="form-row single" style="padding: 16px 18px;">
+                  <label>Nome visualizzato</label>
+                  <input type="text" value="Tuo Indirizzo"/>
+                </div>
+                <div class="form-row single" style="padding: 0 18px 16px;">
+                  <label>Email</label>
+                  <input type="email" value="tuo.indirizzo@example.com" disabled/>
+                  <div class="onb-help" style="margin-top:4px;">Per cambiare l'email serve una nuova verifica via magic link.</div>
+                </div>
+                <div class="setting-row"><button class="btn btn-primary btn-sm">Salva modifiche</button></div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-header"><div class="panel-title">Sessioni attive</div></div>
+                <div style="padding: 8px 18px;">
+                  <div class="session-item current">
+                    <div class="ico">💻</div>
+                    <div class="body">
+                      <b>Firefox · macOS</b>
+                      <div class="m">IP 82.84.13.x · Milano · ora</div>
+                    </div>
+                    <button class="btn btn-ghost btn-sm" disabled>Questa</button>
+                  </div>
+                  <div class="session-item">
+                    <div class="ico">📱</div>
+                    <div class="body">
+                      <b>Safari · iOS</b>
+                      <div class="m">IP 82.84.13.x · Milano · 2 giorni fa</div>
+                    </div>
+                    <button class="btn btn-danger btn-sm">Revoca</button>
+                  </div>
+                  <div class="session-item">
+                    <div class="ico">💻</div>
+                    <div class="body">
+                      <b>Chrome · Windows</b>
+                      <div class="m">IP 195.62.x.x · sconosciuto · 1 settimana fa</div>
+                    </div>
+                    <button class="btn btn-danger btn-sm">Revoca</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-header"><div class="panel-title">Sicurezza</div></div>
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <h4>App password IMAP</h4>
+                    <p>Per Gmail abilita 2FA e crea una password dedicata</p>
+                  </div>
+                  <button class="btn btn-secondary btn-sm">Genera</button>
+                </div>
+                <div class="setting-row">
+                  <div class="setting-info">
+                    <h4>Revoca tutti gli accessi</h4>
+                    <p>Ti farà rifare il login su tutti i dispositivi</p>
+                  </div>
+                  <button class="btn btn-danger btn-sm">Esci ovunque</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ============== Attività ============== -->
       <div class="page" id="page-activity">
         <div class="page-header">
@@ -1095,6 +1648,160 @@ Cordiali saluti</pre>
   </div>
 </section>
 
+<!-- ============== Onboarding ============== -->
+<div class="onboarding" id="onboarding">
+  <div class="onb-wrap">
+    <div class="onb-steps">
+      <div class="onb-step active" id="onb-prog-1"></div>
+      <div class="onb-step" id="onb-prog-2"></div>
+      <div class="onb-step" id="onb-prog-3"></div>
+    </div>
+
+    <!-- Step 1: IMAP -->
+    <div class="onb-card onb-step-page active" id="onb-step-1">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 6px;">PASSO 1 DI 3</div>
+      <h2>Collega la tua casella email</h2>
+      <p class="sub">Useremo IMAP per scaricare le mail in arrivo e processarle automaticamente.</p>
+
+      <div class="row">
+        <label>Server IMAP</label>
+        <input type="text" placeholder="imap.gmail.com" value="imap.gmail.com"/>
+      </div>
+      <div class="row">
+        <label>Porta</label>
+        <input type="number" value="993" style="max-width: 120px;"/>
+      </div>
+      <div class="row">
+        <label>Email</label>
+        <input type="email" placeholder="tu@gmail.com"/>
+      </div>
+      <div class="row">
+        <label>App password</label>
+        <input type="password" placeholder="••••-••••-••••-••••"/>
+        <div class="onb-help">Per Gmail: <a href="https://myaccount.google.com/apppasswords" target="_blank">crea una app password</a> (richiede 2FA attiva).</div>
+      </div>
+      <div class="row">
+        <label>Cartella</label>
+        <input type="text" value="INBOX"/>
+      </div>
+
+      <div class="onb-foot">
+        <button class="btn btn-ghost" onclick="closeOnboarding()">Salta</button>
+        <button class="btn btn-primary" onclick="onbNext(2)">Verifica e continua →</button>
+      </div>
+    </div>
+
+    <!-- Step 2: SMTP -->
+    <div class="onb-card onb-step-page" id="onb-step-2">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 6px;">PASSO 2 DI 3</div>
+      <h2>Configura l'invio del magic link</h2>
+      <p class="sub">Serve un SMTP per mandare il link di accesso. Consigliato: <a href="https://resend.com" target="_blank">Resend</a> (free tier 100 email/giorno).</p>
+
+      <div class="row">
+        <label>Provider</label>
+        <select>
+          <option>Resend</option>
+          <option>SendGrid</option>
+          <option>Mailgun</option>
+          <option>Gmail SMTP</option>
+          <option>SMTP custom</option>
+        </select>
+      </div>
+      <div class="row">
+        <label>API Key</label>
+        <input type="password" placeholder="re_xxxxxxxxxxxxxxxxxxxxxxxxx"/>
+      </div>
+      <div class="row">
+        <label>Mittente</label>
+        <input type="email" placeholder="noreply@tuodominio.it"/>
+      </div>
+
+      <div class="alert info">
+        <b>Modalità test:</b> in alternativa puoi saltare lo SMTP e il magic link verrà mostrato nei log del server (utile per dev).
+      </div>
+
+      <div class="onb-foot">
+        <button class="btn btn-secondary" onclick="onbNext(1)">← Indietro</button>
+        <button class="btn btn-primary" onclick="onbNext(3)">Continua →</button>
+      </div>
+    </div>
+
+    <!-- Step 3: AI + Allowlist -->
+    <div class="onb-card onb-step-page" id="onb-step-3">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 6px;">PASSO 3 DI 3</div>
+      <h2>Ultimo step: allowlist e AI</h2>
+      <p class="sub">Definisci chi può autenticarsi e (se vuoi) collega OpenRouter per l'assistente.</p>
+
+      <div class="row">
+        <label>Email autorizzate</label>
+        <input type="text" placeholder="tu@example.com, collega@studio.it"/>
+        <div class="onb-help">Lista separata da virgole. Lascia vuoto per nessuna restrizione (sconsigliato).</div>
+      </div>
+
+      <div class="row">
+        <label>OpenRouter API Key (opzionale)</label>
+        <input type="password" placeholder="sk-or-v1-..."/>
+        <div class="onb-help">Necessaria solo per l'assistente AI. Puoi aggiungerla anche dopo da Impostazioni.</div>
+      </div>
+
+      <div class="row">
+        <label>Modello di default</label>
+        <select>
+          <option>Claude Sonnet 4.6 (economico)</option>
+          <option selected>Claude Opus 4.7 (qualità)</option>
+          <option>GPT-5</option>
+          <option>Gemini 2.5 Pro</option>
+        </select>
+      </div>
+
+      <div class="onb-summary">
+        <div><span>IMAP</span><b>imap.gmail.com / tu@gmail.com</b></div>
+        <div><span>SMTP</span><b>Resend</b></div>
+        <div><span>Allowlist</span><b>1 indirizzo</b></div>
+        <div><span>AI</span><b>Claude Opus 4.7</b></div>
+      </div>
+
+      <div class="onb-foot">
+        <button class="btn btn-secondary" onclick="onbNext(2)">← Indietro</button>
+        <button class="btn btn-primary" onclick="closeOnboarding()">Completa setup ✓</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============== Error screens ============== -->
+<div class="error-screen" id="err-backend">
+  <div class="icon-big">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+  </div>
+  <h2>Server non raggiungibile</h2>
+  <p>Non riusciamo a contattare il backend. Controlla che il container sia in esecuzione o riprova tra qualche secondo.</p>
+  <div class="err-details">GET /api/auth/me
+→ NetworkError: Failed to fetch
+   at fetch (fetchEmails:34)</div>
+  <div style="display:flex; gap:8px; justify-content:center;">
+    <button class="btn btn-primary" onclick="closeErrors()">Riprova</button>
+    <button class="btn btn-secondary" onclick="closeErrors()">Torna all'app</button>
+  </div>
+  <div style="margin-top: 20px;"><a class="back-link" onclick="showError('next')">Vedi anche errore IMAP →</a></div>
+</div>
+
+<div class="error-screen" id="err-imap">
+  <div class="icon-big" style="background:#fef3c7; color:var(--warn);">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+  </div>
+  <h2>IMAP non raggiungibile</h2>
+  <p>L'ingester non riesce a connettersi a <b>imap.gmail.com</b>. Verifica credenziali o app password.</p>
+  <div class="err-details">imap_tools.errors.MailboxLoginError:
+  command LOGIN illegal in state NONAUTH
+  authentication failed for user tu@gmail.com</div>
+  <div style="display:flex; gap:8px; justify-content:center;">
+    <button class="btn btn-primary" onclick="closeErrors()">Apri impostazioni IMAP</button>
+    <button class="btn btn-secondary" onclick="closeErrors()">Ignora per ora</button>
+  </div>
+  <div style="margin-top: 20px;"><a class="back-link" onclick="showError('next')">Vedi anche errore backend →</a></div>
+</div>
+
 <!-- ============== Detail Modal ============== -->
 <div class="modal-backdrop" id="modal" onclick="closeModalIfBackdrop(event)">
   <div class="modal">
@@ -1155,18 +1862,33 @@ Cordiali saluti</pre>
 
   // ---------- Render email list ----------
   function renderEmails() {
-    document.getElementById("email-rows").innerHTML = emails.map(e => {
-      const b = scoreBadge(e.score);
-      return `
-        <tr class="clickable" onclick="openDetail(${e.id})">
-          <td><div class="sender"><div class="avatar">${initials(e.sender.name)}</div>
-            <div><div class="name">${e.sender.name}</div><small>${e.sender.email}</small></div></div></td>
-          <td class="subject">${e.subject}</td>
-          <td><span class="badge ${b.cls}">${b.label}</span></td>
-          <td class="amount ${e.deposit === 0 ? 'zero' : ''}">${e.deposit ? fmtMoney(e.deposit) : "—"}</td>
-          <td class="date">${fmtDate(e.received_at)}</td>
-        </tr>`;
-    }).join("");
+    const tbody = document.getElementById("email-rows");
+    if (emails.length === 0) {
+      tbody.innerHTML = `
+        <tr><td colspan="5">
+          <div class="empty">
+            <div class="ico">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <h3>Nessuna email ancora</h3>
+            <p>L'ingester IMAP non ha trovato messaggi nella casella, oppure non è ancora configurato.</p>
+            <button class="btn btn-primary" onclick="toggleEmpty()">Ripristina dati demo</button>
+          </div>
+        </td></tr>`;
+    } else {
+      tbody.innerHTML = emails.map(e => {
+        const b = scoreBadge(e.score);
+        return `
+          <tr class="clickable" onclick="navTo('email-detail')">
+            <td><div class="sender"><div class="avatar">${initials(e.sender.name)}</div>
+              <div><div class="name">${e.sender.name}</div><small>${e.sender.email}</small></div></div></td>
+            <td class="subject">${e.subject}</td>
+            <td><span class="badge ${b.cls}">${b.label}</span></td>
+            <td class="amount ${e.deposit === 0 ? 'zero' : ''}">${e.deposit ? fmtMoney(e.deposit) : "—"}</td>
+            <td class="date">${fmtDate(e.received_at)}</td>
+          </tr>`;
+      }).join("");
+    }
     document.getElementById("stat-total").textContent = emails.length;
     const avg = emails.length ? Math.round(emails.reduce((s, e) => s + e.score, 0) / emails.length) : 0;
     document.getElementById("stat-score").textContent = avg;
@@ -1190,11 +1912,24 @@ Cordiali saluti</pre>
       </div>`).join("");
   }
 
+  // ---------- Cost bar chart ----------
+  function renderCostBars() {
+    const data = [0.18, 0.32, 0.21, 0.45, 0.38, 0.12, 0.05, 0.28, 0.51, 0.62, 0.44, 0.39, 0.71, 0.16];
+    const max = Math.max(...data);
+    document.getElementById("cost-bar-chart").innerHTML = data.map((v, i) => `
+      <div class="cost-bar-col">
+        <div class="cost-bar" style="height:${(v / max) * 100}%" title="$${v.toFixed(2)}"></div>
+        <div class="cost-bar-lab">${i + 1}</div>
+      </div>`).join("");
+  }
+
   // ---------- Navigation ----------
   function navTo(page) {
     document.querySelectorAll(".nav-item").forEach(n => n.classList.toggle("active", n.dataset.page === page));
     document.querySelectorAll(".page").forEach(p => p.classList.toggle("active", p.id === "page-" + page));
     if (page === "stats") renderBars();
+    if (page === "ai-costs") renderCostBars();
+    window.scrollTo(0, 0);
   }
 
   // ---------- Login flow ----------
@@ -1382,6 +2117,12 @@ Cordiali saluti</pre>
     }, 900);
   }
 
+  function toggleEmpty() {
+    if (emails.length > 0) emails = [];
+    else emails = [...seedEmails];
+    renderEmails();
+  }
+
   function newChat() {
     const messages = document.getElementById("messages");
     messages.innerHTML = `
@@ -1399,6 +2140,42 @@ Cordiali saluti</pre>
     document.getElementById("screen-app").classList.remove("active");
     document.getElementById("screen-login").classList.add("active");
     document.getElementById("login-feedback").innerHTML = "";
+  }
+
+  // ---------- Onboarding ----------
+  function openOnboarding() {
+    document.getElementById("onboarding").classList.add("open");
+    onbNext(1);
+  }
+  function closeOnboarding() {
+    document.getElementById("onboarding").classList.remove("open");
+  }
+  function onbNext(step) {
+    [1, 2, 3].forEach(i => {
+      document.getElementById("onb-step-" + i).classList.toggle("active", i === step);
+      document.getElementById("onb-prog-" + i).classList.toggle("active", i === step);
+      document.getElementById("onb-prog-" + i).classList.toggle("done", i < step);
+    });
+  }
+
+  // ---------- Error screens ----------
+  let errToggle = 0;
+  function showError(kind) {
+    document.querySelectorAll(".error-screen").forEach(e => e.classList.remove("open"));
+    document.getElementById("screen-app").classList.remove("active");
+    const list = ["err-backend", "err-imap"];
+    if (kind === "next") {
+      errToggle = (errToggle + 1) % list.length;
+    } else {
+      errToggle = kind === "imap" ? 1 : 0;
+    }
+    document.getElementById(list[errToggle]).classList.add("open");
+    document.querySelector(".demo-banner").style.display = "none";
+  }
+  function closeErrors() {
+    document.querySelectorAll(".error-screen").forEach(e => e.classList.remove("open"));
+    document.getElementById("screen-app").classList.add("active");
+    document.querySelector(".demo-banner").style.display = "block";
   }
 
   // Render iniziale (la demo si apre già loggata)
