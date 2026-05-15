@@ -628,6 +628,36 @@
   }
   .back-link:hover { color: var(--text); }
 
+  /* ---------- Traccia condivisa ---------- */
+  .recat-old { text-decoration: line-through; color: var(--muted); }
+  .recat-new { color: var(--success); font-weight: 600; }
+  .share-link {
+    display: flex; align-items: center; gap: 10px; margin-top: 10px;
+    background: #0f172a; color: #e2e8f0; border-radius: 8px;
+    padding: 10px 12px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px; overflow-x: auto;
+  }
+  .share-link .u { flex: 1; white-space: nowrap; }
+  .flow-strip {
+    display: flex; align-items: stretch; gap: 0; flex-wrap: wrap;
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .flow-node {
+    flex: 1; min-width: 130px; padding: 14px 16px; background: var(--panel);
+    border-right: 1px solid var(--border);
+  }
+  .flow-node:last-child { border-right: none; }
+  .flow-node .lab { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .flow-node .val { font-size: 18px; font-weight: 600; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .flow-node .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .cfo-mail {
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .cfo-mail .h { background: #fafbfc; border-bottom: 1px solid var(--border); padding: 12px 16px; font-size: 13px; }
+  .cfo-mail .h .row { display: flex; gap: 8px; padding: 2px 0; }
+  .cfo-mail .h .k { color: var(--muted); width: 70px; flex-shrink: 0; }
+  .cfo-mail .b { padding: 16px; font-size: 14px; line-height: 1.6; white-space: pre-wrap; color: #1f2937; }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 900px) {
     .stats { grid-template-columns: repeat(2, 1fr); }
@@ -712,6 +742,10 @@
       <div class="nav-item" data-page="profile" onclick="navTo('profile')">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         Profilo
+      </div>
+      <div class="nav-item" data-page="trace" onclick="navTo('trace')">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a3 3 0 1 0-2.83-4M6 15a3 3 0 1 0 .01 0M18 19a3 3 0 1 0 .01 0M8.6 13.5l6.8-3M8.6 14.5l6.8 4"/></svg>
+        Traccia Dany
       </div>
       <div class="nav-spacer"></div>
       <div class="nav-user">
@@ -1644,6 +1678,158 @@ Cordiali saluti</textarea>
         </div>
       </div>
 
+      <!-- ============== Traccia Dany (condivisibile a Smau) ============== -->
+      <div class="page" id="page-trace">
+        <div class="page-header">
+          <div>
+            <div class="page-title">Traccia Dany</div>
+            <div class="page-sub">Registro degli scambi Nevil ↔ Dany · condivisibile in sola lettura</div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" onclick="navTo('assistant')">Vedi nota CFO</button>
+            <button class="btn btn-primary" id="share-btn" onclick="shareTrace()">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg>
+              Condividi con Smau
+            </button>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="alert success" id="share-banner" style="display:none; margin-top:0;">
+            <b>Condivisa con Smau · sola lettura</b> — link firmato, revocabile, scade tra 30 giorni. Smau vede solo questa traccia, non il resto del sistema.
+            <div class="share-link">
+              <span class="u">https://gmn.app/share/dany-nevil/8f3a2c1e9b?sig=ed25519:7c4a…</span>
+              <button class="btn btn-secondary btn-sm" onclick="navigator.clipboard && navigator.clipboard.writeText('link')">Copia</button>
+              <button class="btn btn-danger btn-sm" onclick="revokeShare()">Revoca</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Parti & oggetto</div></div>
+            <div style="padding: 4px 18px 14px;">
+              <div class="meta-row"><span class="k">Da</span><span class="v">GMN — Nevil (CEO)</span></div>
+              <div class="meta-row"><span class="k">A</span><span class="v">Dany (filosofo / sviluppatore)</span></div>
+              <div class="meta-row"><span class="k">Oggetto</span><span class="v">App iOS — interfaccia mail aziendale del CEO</span></div>
+              <div class="meta-row"><span class="k">Stato</span><span class="v"><span class="badge ok">consegnata (demo)</span></span></div>
+              <div class="meta-row"><span class="k">Condivisione</span><span class="v" id="share-state"><span class="badge off">privata</span></span></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Flusso di capitale</div>
+                <div class="panel-sub">Effetto netto cassa: 0 — cambia solo il significato registrato</div>
+              </div>
+            </div>
+            <div style="padding: 16px 18px;">
+              <div class="flow-strip">
+                <div class="flow-node">
+                  <div class="lab">GMN — prima</div>
+                  <div class="val">€ 1.000</div>
+                  <div class="sub">capitale di partenza</div>
+                </div>
+                <div class="flow-node">
+                  <div class="lab">→ Dany</div>
+                  <div class="val">− € 100</div>
+                  <div class="sub">compenso · caparra 0,1 versata</div>
+                </div>
+                <div class="flow-node">
+                  <div class="lab">GMN — dopo</div>
+                  <div class="val">€ 900</div>
+                  <div class="sub">post compenso</div>
+                </div>
+                <div class="flow-node">
+                  <div class="lab">Dany → Smau</div>
+                  <div class="val">€ 100</div>
+                  <div class="sub"><span class="recat-old">donazione</span> → <span class="recat-new">investimento</span></div>
+                </div>
+              </div>
+              <div class="alert info" style="margin-bottom:0;">
+                Riclassificato il <b>15/05/2026</b> da <b>Nevil (CEO)</b>. Motivo: «il flusso verso Smau non chiude una relazione, la apre — è posizionamento strategico, non liberalità». L'evento ha generato automaticamente la nota al CFO (sotto).
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Cronologia</div></div>
+            <div class="activity-list">
+              <div class="item">
+                <div class="act-ico login"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 12h8M12 8v8"/><circle cx="12" cy="12" r="10"/></svg></div>
+                <div class="act-body"><b>Accordo</b> — Nevil e Dany concordano un'app iOS (interfaccia mail del CEO) per <b>€ 100</b>
+                  <div class="meta">12 mag · scambio diretto Nevil ↔ Dany</div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico upload"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M5 8h9a4 4 0 0 1 0 8H6"/></svg></div>
+                <div class="act-body"><b>Caparra simbolica</b> — versati <b>0,1</b> a conferma dell'avvio
+                  <div class="meta">12 mag · gesto, non importo — formalizza l'inizio</div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico ingest"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg></div>
+                <div class="act-body"><b>Pagamento</b> — GMN paga € 100 a Dany · cassa <b>1.000 → 900</b>
+                  <div class="meta">14 mag · uscita categorizzata <code>compenso_app_iOS</code></div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico ingest"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg></div>
+                <div class="act-body"><b>Consegna</b> — Dany consegna la build (interfaccia mail + dashboard)
+                  <div class="meta">15 mag · artefatto: <code>demo.html</code></div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico upload"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+                <div class="act-body"><b>Inoltro a Smau</b> — Dany trasferisce € 100 a Smau
+                  <div class="meta">15 mag · effetto netto cassa GMN: 0</div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico login"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+                <div class="act-body"><b>Insight AI</b> — «un'uscita di cassa che costruisce un arco verso Smau non è spesa, è investimento relazionale»
+                  <div class="meta">15 mag · proposta di riclassificazione</div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico ingest"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></div>
+                <div class="act-body"><b>Riclassificazione</b> — <span class="recat-old">donazione</span> → <span class="recat-new">investimento</span>, confermata da Nevil (CEO)
+                  <div class="meta">15 mag · evento immutabile, loggato con autore e motivo</div></div>
+              </div>
+              <div class="item">
+                <div class="act-ico upload"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4zM4 8l8 5 8-5"/></svg></div>
+                <div class="act-body"><b>Nota al CFO</b> — email generata automaticamente dalla riclassificazione, in attesa di invio
+                  <div class="meta">15 mag · vedi anteprima sotto</div></div>
+              </div>
+              <div class="item" id="trace-share-event" style="display:none;">
+                <div class="act-ico ingest"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg></div>
+                <div class="act-body"><b>Condivisa con Smau</b> — Nevil ha generato un link firmato in sola lettura
+                  <div class="meta" id="trace-share-meta">—</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title">Comunicazione al CFO</div><span class="badge warn">bozza · da approvare</span></div>
+            <div style="padding: 16px 18px;">
+              <div class="cfo-mail">
+                <div class="h">
+                  <div class="row"><span class="k">Da</span><span>Nevil — CEO GMN &lt;nevil@gmn.it&gt;</span></div>
+                  <div class="row"><span class="k">A</span><span>CFO &lt;cfo@gmn.it&gt;</span></div>
+                  <div class="row"><span class="k">Oggetto</span><span>Riclassificazione flusso Dany del 15/05 — da donazione a investimento strategico</span></div>
+                </div>
+                <div class="b">Ciao,
+
+ti comunico una riclassificazione contabile decisa oggi.
+
+I € 100 del flusso GMN → Dany (compenso per l'app iOS), successivamente trasferiti da Dany a Smau, vanno registrati come <b>investimento strategico</b> e non come donazione/liberalità.
+
+Razionale: il trasferimento verso Smau non estingue una relazione, la inaugura — costruisce posizionamento e un canale che ci aspettiamo produca ritorno. L'effetto netto sulla cassa è nullo (1.000 → 900 per il compenso, i 100 escono già destinati), ma cambia la categoria a bilancio e il modo in cui lo raccontiamo.
+
+La traccia completa e immutabile (accordo, caparra 0,1, pagamento, consegna, inoltro, insight) è consultabile e l'ho condivisa con Smau in sola lettura per trasparenza totale.
+
+Procedi con l'imputazione a «investimenti / sviluppo relazioni».
+
+Nevil — CEO GMN</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 </section>
@@ -2121,6 +2307,28 @@ Cordiali saluti</textarea>
     if (emails.length > 0) emails = [];
     else emails = [...seedEmails];
     renderEmails();
+  }
+
+  // ---------- Traccia condivisa ----------
+  function shareTrace() {
+    document.getElementById("share-banner").style.display = "block";
+    document.getElementById("share-state").innerHTML = '<span class="badge ok">condivisa con Smau</span>';
+    document.getElementById("share-btn").innerHTML = "Condivisa ✓";
+    document.getElementById("share-btn").disabled = true;
+    const ev = document.getElementById("trace-share-event");
+    ev.style.display = "flex";
+    const now = new Date();
+    const hh = String(now.getHours()).padStart(2, "0") + ":" + String(now.getMinutes()).padStart(2, "0");
+    document.getElementById("trace-share-meta").textContent =
+      "oggi · " + hh + " · sola lettura · scade tra 30 giorni · audit attivo";
+  }
+  function revokeShare() {
+    document.getElementById("share-banner").style.display = "none";
+    document.getElementById("share-state").innerHTML = '<span class="badge off">privata</span>';
+    document.getElementById("share-btn").innerHTML =
+      '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></svg> Condividi con Smau';
+    document.getElementById("share-btn").disabled = false;
+    document.getElementById("trace-share-event").style.display = "none";
   }
 
   function newChat() {
