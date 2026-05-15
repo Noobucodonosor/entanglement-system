@@ -11,7 +11,11 @@ function UploadEmail({ onUploaded }) {
     const data = new FormData();
     data.append("file", file);
     try {
-      await fetch("/api/emails/upload", { method: "POST", body: data });
+      await fetch("/api/emails/upload", {
+        method: "POST",
+        body: data,
+        credentials: "include",
+      });
       setFile(null);
       onUploaded?.();
     } catch (err) {
