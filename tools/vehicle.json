@@ -1,0 +1,222 @@
+{
+  "schema_version": "1.0",
+  "data_version": "scooterlab-dati-officina-v1.0",
+  "compiled": "2026-08-14",
+  "note": "Valori trascritti dalla scheda d'officina ScooterLab v1.0. Ogni campo `null` e' un dato NON reperito: non e' stato stimato ne' inventato. I campi `_note` conservano il contesto necessario a interpretare il numero.",
+
+  "vehicle": {
+    "brand": "SYM",
+    "model": "Symphony ST 200i",
+    "variant": "ABS Euro 4",
+    "engine_code": "XB20E2-EU",
+    "engine_family": "XB20",
+    "displacement_cc": 169,
+    "_note": "Il manuale d'officina non e' intestato a questo modello ma al Fiddle III 200i: stesso motore XB20, stessa CVT, stessa iniezione. Le specifiche coincidono cifra per cifra, con l'eccezione del regime minimo (vedi engine.idle_rpm)."
+  },
+
+  "sources": [
+    {
+      "id": "fiddle3_sm",
+      "title": "SYM Fiddle III 200i - Service Manual",
+      "publisher": "Alliance Powersports (portale download SYM USA)",
+      "access": "pubblico, senza login",
+      "role": "fonte primaria per motore, CVT, coppie, EFI"
+    },
+    {
+      "id": "jet14_sm",
+      "title": "SYM Jet 14 200i - Service Manual",
+      "publisher": "Alliance Powersports (portale download SYM USA)",
+      "access": "pubblico, senza login",
+      "role": "il piu' completo (>30 MB), include il capitolo ABS; NON ancora spogliato"
+    },
+    {
+      "id": "st200_owner",
+      "title": "Libretto d'uso ufficiale Symphony ST 200 ABS Euro 4",
+      "language": "tr",
+      "role": "conferma intervalli di manutenzione del modello esatto"
+    },
+    {
+      "id": "sym_it_spec",
+      "title": "Scheda tecnica SYM Italia XB20E2-EU Euro 4",
+      "role": "taratura italiana del regime minimo"
+    },
+    {
+      "id": "maxsym_abs_sm",
+      "title": "SYM Maxsym 400i/600i ABS - Service Manual (cap. ABS p. 221)",
+      "role": "stesso sensore ABS 44870-L4C-000: procedura di diagnosi trasferibile"
+    },
+    {
+      "id": "joyride200_sm",
+      "title": "SYM Joyride 200i EVO - Service Manual (p. 154)",
+      "role": "riscontro indipendente del limite di usura cinghia"
+    },
+    {
+      "id": "eu_parts_catalog",
+      "title": "Catalogo ricambi ufficiale europeo SYM",
+      "role": "codici ricambio e prezzi indicativi ABS"
+    }
+  ],
+
+  "engine": {
+    "bore_mm": 61.0,
+    "stroke_mm": 57.8,
+    "compression_ratio": { "nominal": 10.2, "tolerance": 0.2 },
+    "valve_clearance_mm": {
+      "intake": { "nominal": 0.12, "tolerance": 0.02 },
+      "exhaust": { "nominal": 0.12, "tolerance": 0.02 },
+      "condition": "motore freddo, < 35 °C",
+      "verified": true
+    },
+    "idle_rpm": {
+      "nominal": 1800,
+      "tolerance": 100,
+      "source": "sym_it_spec",
+      "_note": "CORREZIONE. Il service manual USA (Fiddle III) riporta 1700 +/- 100; la scheda ufficiale SYM Italia dell'XB20E2-EU Euro 4 specifica 1800 +/- 100. Le due tarature differiscono. Qui vale la taratura italiana: e' il valore con cui verificare il contagiri.",
+      "alternate": { "nominal": 1700, "tolerance": 100, "source": "fiddle3_sm" }
+    },
+    "throttle_grip_free_play_mm": { "min": 2, "max": 6 },
+    "spark_plug": {
+      "type": "NGK CR7HSA",
+      "gap_mm": { "min": 0.6, "max": 0.7 },
+      "torque_nm": { "min": 10, "max": 12 }
+    },
+    "cylinder_piston_clearances": null,
+    "cam_lobe_lift_mm": null
+  },
+
+  "cvt": {
+    "belt": {
+      "width_new_mm": 19.7,
+      "width_service_limit_mm": 17.5,
+      "usable_wear_mm": 2.2,
+      "verified": true,
+      "sources": ["fiddle3_sm", "joyride200_sm"],
+      "_note": "Riferimento fisico assoluto: misura la larghezza col calibro a ogni apertura del carter e registrala con km e indice di slittamento. Due o tre punti bastano a costruire la curva di usura reale."
+    },
+    "belt_replacement_km": 12000,
+    "belt_inspection_km": [1000, 3000, 6000],
+    "_belt_interval_note": "CORREZIONE. Il valore precedente di 6.000 km derivava da una tabella di manutenzione di gamma SYM che contiene la riga 'Carburetor (idle speed)': e' la tabella del 50 a carburatore, non del 200 a iniezione. Service manual e libretto ufficiale Euro 4 concordano su 12.000 km.",
+    "rollers": {
+      "replacement_interval_km": null,
+      "diameter_service_limit_mm": null,
+      "prescription": "pulizia e controllo; sostituzione solo se necessario",
+      "_note": "Nessun intervallo fisso a manuale. Il limite di usura (diametro minimo) sta nel capitolo 'V-Belt Driving System' del jet14_sm, non ancora letto."
+    },
+    "clutch_shoe_service_limit_mm": null,
+    "clutch_bell_service_limit_mm": null,
+    "driven_pulley_spring_free_length_mm": null
+  },
+
+  "fluids": {
+    "engine_oil": {
+      "spec": "SAE 10W-30 API SH/CD",
+      "capacity_cc": { "oil_change": 700, "engine_overhaul": 950 }
+    },
+    "transmission_oil": {
+      "spec": "SAE 85W-140 hypoid",
+      "capacity_cc": 170,
+      "change_interval_km": 5000
+    }
+  },
+
+  "torques_nm": {
+    "_note": "Valori a manuale espressi in kgf*m; qui convertiti in Nm mantenendo l'intervallo originale.",
+    "variator_nut": { "thread": "M12", "min": 49, "max": 59, "original_kgfm": { "min": 5.0, "max": 6.0 } },
+    "driven_pulley_nut": { "thread": "M12", "min": 54, "max": 59, "original_kgfm": { "min": 5.5, "max": 6.0 } },
+    "transmission_case_bolts": { "thread": "M8", "count": 7, "min": 25, "max": 29, "original_kgfm": { "min": 2.6, "max": 3.0 } },
+    "front_axle": { "thread": "M12", "min": 49, "max": 69 },
+    "rear_axle": { "thread": "M16", "min": 108, "max": 128 },
+    "brake_disc_bolts": { "thread": "M8", "count": 5, "min": 27, "max": 31, "applies_to": ["anteriore", "posteriore"] },
+    "standard": {
+      "M5": { "min": 4.4, "max": 5.9 },
+      "M6": { "min": 7.8, "max": 11.8 },
+      "M8": { "min": 17.7, "max": 24.5 },
+      "M10": { "min": 29.4, "max": 39.2 },
+      "M12": { "min": 49, "max": 59 }
+    }
+  },
+
+  "abs": {
+    "tone_ring": {
+      "construction": "disco separato, imbullonato insieme al disco freno",
+      "integrated_in_hub": false,
+      "integrated_in_brake_disc": false,
+      "inspectable": true,
+      "teeth_count": null,
+      "_note": "Il catalogo ricambi europeo lo elenca come particolare a se' stante su entrambe le ruote. Smontando la pinza si vede l'anello, si contano i denti e si ispeziona il traferro del sensore."
+    },
+    "sensor": {
+      "part_number": "44870-L4C-000",
+      "price_eur_new": 36,
+      "type": null,
+      "wire_count": null,
+      "shared_with": ["GTS 125i", "GTS 300i", "Joymax", "Cruisym", "Maxsym 400i", "Maxsym 600i"],
+      "reference_procedure": "maxsym_abs_sm",
+      "_note": "Da verificare fisicamente: Hall attivo con uscita a onda quadra (piu' probabile, piu' semplice da derivare) oppure induttivo passivo a riluttanza variabile (richiede comparatore per squadrare il segnale). Indizio rapido: 2 fili -> probabilmente passivo; 3 fili -> attivo con alimentazione."
+    },
+    "parts": [
+      { "name": "Anello fonico anteriore (FR ABS detective disk)", "part_number": "45120-XMC-000", "price_eur": 13 },
+      { "name": "Anello fonico posteriore (RR ABS detective disk)", "part_number": "43120-XJE-000", "price_eur": 11 },
+      { "name": "Sensore di velocita' ABS (ant. e post.)", "part_number": "44870-L4C-000", "price_eur": 36 },
+      { "name": "Centralina idraulica ABS", "part_number": "38730-XMC-000", "price_eur_range": [900, 1100], "do_not_touch": true }
+    ],
+    "tapping_rule": {
+      "mandatory": true,
+      "text": "Il segnale va derivato in parallelo ad alta impedenza. Mai interrompere il collegamento tra sensore e centralina ABS, mai iniettare nulla sulla linea. L'ABS e' un sistema di sicurezza omologato e deve continuare a funzionare identico. In caso di dubbio si montano i magneti come da piano originale: si perde risoluzione, non sicurezza."
+    },
+    "speedometer_drive": {
+      "likely_type": "rinvio meccanico",
+      "evidence": "nella tavola ruota anteriore compare ancora lo speedometer gear box seal 91258-M9Q-000",
+      "implication": "se confermato, i due sensori ABS sono l'unica sorgente elettrica di velocita' ruota gia' presente sul mezzo"
+    }
+  },
+
+  "efi_diagnostics": {
+    "mil_blink_readout": {
+      "procedure": "chiave su ON senza avviare; la spia ripete il codice 4 volte",
+      "long_blink_s": 1.0,
+      "long_blink_means": "decine",
+      "short_blink_s": 0.5,
+      "short_blink_means": "unita'",
+      "example": "1 lampeggio lungo + 1 corto = codice 11",
+      "lamp_blinking": "guasto di priorita' 1 (grave)",
+      "lamp_steady_on": "guasto di priorita' 2",
+      "diagnostic_connector_location": "dentro il vano portaoggetti interno"
+    },
+    "fault_codes": [
+      { "blinks": "11", "dtc": "P0217", "meaning": "Sovratemperatura motore" },
+      { "blinks": "22", "dtc": "P0335", "meaning": "Sensore posizione albero motore" },
+      { "blinks": "33", "dtc": "P0120", "meaning": "Farfalla: apprendimento" },
+      { "blinks": "44", "dtc": "P0121", "meaning": "Farfalla: tensione" },
+      { "blinks": "55", "dtc": "P0124", "meaning": "Farfalla: velocita' di rotazione" },
+      { "blinks": "66", "dtc": "P0560", "meaning": "Tensione batteria" },
+      { "blinks": "77", "dtc": "P0110", "meaning": "Temperatura aria aspirata" },
+      { "blinks": "99", "dtc": "P0505", "meaning": "Apprendimento valvola bypass aria (minimo)" },
+      { "blinks": "1010", "dtc": "P0200", "meaning": "Iniettore" },
+      { "blinks": "1111", "dtc": "P0350", "meaning": "Circuito accensione" },
+      { "blinks": "1212", "dtc": "P0230", "meaning": "Rele' pompa benzina" },
+      { "blinks": "1616", "dtc": "P0115", "meaning": "Sensore temperatura motore" }
+    ],
+    "electrical_reference": {
+      "fuel_pressure_bar": 2.5,
+      "injector_resistance_ohm": { "value": 12, "at_c": 20 },
+      "ignition_coil_primary_ohm": { "nominal": 0.63, "tolerance": 0.03 },
+      "crank_pickup_ohm": { "min": 170, "max": 210 },
+      "engine_temp_sensor_ohm": { "nominal": 703.8, "tolerance": 40.9, "at_c": 60 }
+    },
+    "idle_speed_learning": {
+      "required_after": "ogni intervento sul corpo farfallato",
+      "procedure": "10 minuti al minimo a temperatura di esercizio"
+    }
+  },
+
+  "open_questions": [
+    { "item": "Limite di usura rulli (diametro minimo)", "where": "jet14_sm, capitolo 'V-Belt Driving System'", "blocked_by": "PDF >30 MB, troncato in lettura" },
+    { "item": "Limiti di usura masse frizione e campana", "where": "jet14_sm / fiddle3_sm, capitolo CVT", "blocked_by": "PDF troncato in lettura" },
+    { "item": "Lunghezza libera molla puleggia condotta", "where": "jet14_sm / fiddle3_sm, capitolo CVT", "blocked_by": "PDF troncato in lettura" },
+    { "item": "Tolleranze cilindro/pistone e alzate camme", "where": "capitoli centrali del service manual", "blocked_by": "PDF troncato in lettura" },
+    { "item": "Capitolo ABS completo", "where": "jet14_sm; riferimento trasferibile in maxsym_abs_sm p. 221", "blocked_by": "PDF troncato in lettura" },
+    { "item": "Tipo di sensore ABS (Hall attivo vs induttivo passivo)", "where": "verifica fisica sul mezzo", "blocked_by": "conta i fili del connettore: 2 -> passivo, 3 -> attivo" },
+    { "item": "Numero di denti dell'anello fonico (determina la risoluzione)", "where": "verifica fisica sul mezzo", "blocked_by": "conta i denti a occhio con la pinza smontata" }
+  ]
+}
